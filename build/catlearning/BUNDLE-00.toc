@@ -1,0 +1,3 @@
+([('catlearning',
+   '/Users/mariopenglee/Documents/GitHub/catlearning/dist/catlearning',
+   'EXECUTABLE')],)
