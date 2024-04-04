@@ -40,6 +40,8 @@ class ExperimentApp:
         self.has_replay = False
         self.has_timer = False
         self.broad_to_narrow = True
+        self.response_times = []
+        self.response_options = []
 
 
         
@@ -482,6 +484,7 @@ class ExperimentApp:
         if self.has_timer:
             response_time = time.time() - self.start_time
             print(response_time)
+            self.response_times.append(response_time)
         self.disable_options = True
         if self.has_replay:
             self.replay_button.destroy()
@@ -490,6 +493,7 @@ class ExperimentApp:
         # show the 'next' button at the right upper corner of the screen
         # console the option_index
         print(option_label)
+        self.response_options.append(option_label)
         if self.current_section == 3:
             # don't show correct answer when testing
             self.load_next_video()
@@ -530,7 +534,14 @@ class ExperimentApp:
 
 
     def end_experiment(self):
+        # save the response times and options to a single csv file
+        with open("results.csv", "w") as f:
+            f.write("response_time, response_option\n")
+            for response_time, response_option in zip(self.response_times, self.response_options):
+                f.write(f"{response_time}, {response_option}\n")
+                
         # Display a message or perform any necessary cleanup
+
         self.root.destroy()
 
 if __name__ == "__main__":
